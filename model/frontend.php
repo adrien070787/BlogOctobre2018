@@ -39,15 +39,8 @@ function getComments($postId)
 // Nouvelle fonction qui nous permet d'éviter de répéter du code
 function dbConnect()
 {
-    try
-    {
-        $bdd = new PDO('mysql:host=localhost;dbname=blog;charset=utf8', 'root', 'root');
-        return $bdd;
-    }
-    catch(Exception $e)
-    {
-        die('Erreur : '.$e->getMessage());
-    }
+    $bdd = new PDO('mysql:host=localhooooost;dbname=blog;charset=utf8', 'root', 'root');
+    return $bdd;
 }
 
 

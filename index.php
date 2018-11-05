@@ -2,16 +2,22 @@
 
 require('controller/frontend.php');
 
-if (isset($_GET['action'])) {
+try {
+    if (isset($_GET['action'])) {
 
-    if ($_GET['action'] == 'home') {
+        if ($_GET['action'] == 'home') {
+            listPosts();
+        } else if ($_GET['action'] == 'post') {
+            post();
+        }
+    } else {
         listPosts();
-    } else if ($_GET['action'] == 'post') {
-        post();
     }
-} else {
-    listPosts();
-}
+} catch(Exception $e)
+    {
+        $messageErreur = $e->getMessage();
+        require('view/errorView.php');
+    }
 
 ?>
 

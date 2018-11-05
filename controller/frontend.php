@@ -10,10 +10,20 @@ require('model/frontend.php');
 
 function post() {
 
-    $postId = $_GET['id'];
-    $post = getPost($postId);
-    $comments = getComments($postId);
-    require ('view/frontend/postView.php');
+    if (isset($_GET['id']) && $_GET['id'] > 0) {
+        $postId = $_GET['id'];
+        $post = getPost($postId);
+
+        if (!empty($post)) {
+            $comments = getComments($postId);
+            require ('view/frontend/postView.php');
+        } else {
+            throw new Exception('Aucun post pour cet id');
+        }
+
+    } else {
+        throw new Exception('Mauvais identifiant de post envoyé dans l\'url');
+    }
 }
 
 
