@@ -10,11 +10,27 @@ require('model/frontend.php');
 
 function post() {
 
+    $alert = '';
+
     if (isset($_GET['id']) && $_GET['id'] > 0) {
         $postId = $_GET['id'];
         $post = getPost($postId);
 
         if (!empty($post)) {
+
+            if (isset($_POST['validate'])) {
+                if (isset($_POST['nickname']) && isset($_POST['message'])) {
+                    $nickname = $_POST['nickname'];
+                    $comment = $_POST['message'];
+                    $affectedLines = setComment($postId, $nickname, $comment);
+                    if ($affectedLines == 0 || $affectedLines == NULL) {
+                        throw new Exception('Impossible d\'ajouter le commentaire');
+                    } else {
+                        $alert = '<div class="alert alert-success">Votre commentaire a bien été envoyé</div>';
+                    }
+                }
+            }
+
             $comments = getComments($postId);
             require ('view/frontend/postView.php');
         } else {

@@ -36,10 +36,20 @@ function getComments($postId)
     return $comments;
 }
 
+
+function setComment($postId, $nickname, $comment) {
+    $db = dbConnect();
+    $requete = $db->prepare('INSERT INTO `comments`(`post_id`, `author`, `comment`, `comment_date`) VALUES (?,?,?,NOW())');
+    $affectedLines = $requete->execute(array($postId, $nickname, $comment));
+    return $affectedLines;
+}
+
+
+
 // Nouvelle fonction qui nous permet d'éviter de répéter du code
 function dbConnect()
 {
-    $bdd = new PDO('mysql:host=localhooooost;dbname=blog;charset=utf8', 'root', 'root');
+    $bdd = new PDO('mysql:host=localhost;dbname=blog;charset=utf8', 'root', 'root');
     return $bdd;
 }
 
