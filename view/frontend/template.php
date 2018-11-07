@@ -21,6 +21,7 @@
     <body>
         <div class="container">
             <?= $content ?>
+            <footer class="center">Copiryght Adrien</footer>
         </div>
     </body>
 </html>

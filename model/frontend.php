@@ -6,11 +6,12 @@
  * Time: 16:59
  */
 
-function getPosts()
+function getPosts($start)
 {
 
     $bdd = dbConnect();
-    $requete = $bdd->query('SELECT id, title, content, DATE_FORMAT(creation_date, "%d/%c/%Y à %Hh%imin%Ss") as date_fr, DATE_FORMAT(creation_date, "%c/%d/%Y at %Hh%imin%Ss") as date_en FROM posts ORDER BY creation_date DESC LIMIT 0, 5');
+    $requete = $bdd->query('SELECT id, title, content, DATE_FORMAT(creation_date, "%d/%c/%Y à %Hh%imin%Ss") as date_fr, DATE_FORMAT(creation_date, "%c/%d/%Y at %Hh%imin%Ss") as date_en 
+                          FROM posts ORDER BY creation_date DESC LIMIT '.$start.', 10');
 
     return $requete;
 }
@@ -42,6 +43,13 @@ function setComment($postId, $nickname, $comment) {
     $requete = $db->prepare('INSERT INTO `comments`(`post_id`, `author`, `comment`, `comment_date`) VALUES (?,?,?,NOW())');
     $affectedLines = $requete->execute(array($postId, $nickname, $comment));
     return $affectedLines;
+}
+
+function getCountItems($items) {
+    $db = dbConnect();
+    $requete = $db->query('SELECT count(*) FROM '.$items);
+    $result = $requete->fetch();
+    return $result[0];
 }
 
 

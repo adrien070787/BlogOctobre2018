@@ -33,6 +33,8 @@ ob_start();
 
 			}
 
+include('view/modules/pagination.php');
+
 $content = 	ob_get_clean();
 
 require('template.php');

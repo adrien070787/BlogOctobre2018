@@ -44,7 +44,18 @@ function post() {
 
 
 function listPosts() {
+    if (isset($_GET['page'])) {
+        $start = ($_GET['page']*10)-10;
+        $requete = getPosts($start);
+    } else {
+        $requete = getPosts(0);
+    }
 
-    $requete = getPosts();
+    $nb_items = countItems('posts');
     require('view/frontend/affichageAccueil.php');
+}
+
+function countItems($items) {
+    $nb_items = getCountItems($items);
+    return $nb_items;
 }
